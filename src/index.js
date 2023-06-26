@@ -10,10 +10,11 @@ function getWeather(city) {
 
   request.addEventListener("loadend", function () {
     const response = JSON.parse(this.responseText);
+    console.log(response);
     if (this.status === 200) {
       printElements(response, city);
     } else {
-      printError(this, city);
+      printError(this, response, city);
     }
   });
 
@@ -22,10 +23,11 @@ function getWeather(city) {
 }
 
 // UI Logic
-function printError(request, city) {
+
+function printError(request, apiResponse, city) {
   document.querySelector(
     "#showResponse"
-  ).innerText = `There was an error accessing the weather data for ${city}:  ${request.status} ${request.statusText}`;
+  ).innerText = `There was an error accessing the weather data for ${city}: ${request.status} ${request.statusText}: ${apiResponse.message}`;
 }
 
 function printElements(apiResponse, city) {
